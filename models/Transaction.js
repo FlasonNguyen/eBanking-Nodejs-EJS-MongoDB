@@ -1,7 +1,8 @@
 //create transaction model for transactions
-const Transaction = new Schema({
+const mongoose = require("mongoose");
+const Transaction = new mongoose.Schema({
   user: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
     trim: true,
@@ -12,13 +13,16 @@ const Transaction = new Schema({
     required: true,
     trim: true,
     min: 0,
-    max: 5000000,
     validate(value) {
-      if (value.match(/^[0-9]{1,7}(\.?[0-9]{0,2})?$/)) {
+      if (value.toString().match(/^[0-9]{1,7}(\.?[0-9]{0,2})?$/)) {
         return true;
       }
       throw new Error("Amount must be a number");
     },
+  },
+  transactionType: {
+    type: String,
+    required: true,
   },
   createdAt: {
     type: Date,
@@ -31,29 +35,20 @@ const Transaction = new Schema({
     default: "pending",
     enum: ["pending", "approved", "rejected"],
   },
-  reason: {
+  description: {
     type: String,
     required: true,
     trim: true,
     default: "",
     maxlength: 255,
-    validate(value) {
-      if (value.match(/^[a-zA-Z0-9 ]+$/)) {
-        return true;
-      }
-      throw new Error("Reason must be a string");
-    },
-  },
-  //write function set status to pending if amount > 5000000
-  setStatus: function () {
-    if (this.amount > 5000000) {
-      this.status = "pending";
-    }
-  },
-  //write function set status to approved if amount < 5000000
-  setStatus: function () {
-    if (this.amount < 5000000) {
-      this.status = "approved";
-    }
   },
 });
+Transaction.pre("save", function (next) {
+  if (this.amount >= 5000000 && this.transactionType != "deposit") {
+    this.status = "pending";
+  } else if (this.amount < 5000000 || this.transactionType == "deposit") {
+    this.status = "approved";
+  }
+  next();
+});
+module.exports = mongoose.model("Transaction", Transaction);

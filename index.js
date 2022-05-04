@@ -1,6 +1,7 @@
-import express from "express";
-import mongoose from "mongoose";
-import session from "express-session";
+const express = require("express");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -22,11 +23,14 @@ app.use(
   })
 );
 
+app.use("/account", require("./routes/account"));
+app.use("/admin", require("./routes/admin"));
+app.use("/transaction", require("./routes/transaction"));
+
 mongoose
-  .connect(process.env.MONGOD_URI, {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
   })
   .then(() => {
     console.log("Connected to MongoDB");

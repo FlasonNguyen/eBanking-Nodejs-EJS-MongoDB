@@ -1,8 +1,6 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
-import { hash, compare } from "bcryptjs";
+const mongoose = require("mongoose");
 //create user schema
-const User = new Schema({
+const User = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -10,7 +8,7 @@ const User = new Schema({
     trim: true,
     lowercase: true,
   },
-  usernames: {
+  username: {
     type: String,
     required: true,
     unique: true,
@@ -20,10 +18,8 @@ const User = new Schema({
   password: {
     type: String,
     required: true,
-    trim: true,
-    minlength: 8,
+    minlength: 6,
     maxlength: 255,
-    select: false,
   },
   createdAt: {
     type: Date,
@@ -35,7 +31,6 @@ const User = new Schema({
   fullname: {
     type: String,
     required: true,
-    trim: true,
   },
   address: {
     type: String,
@@ -70,17 +65,35 @@ const User = new Schema({
     default: "pending",
     enum: ["active", "inactive", "pending", "blocked"],
   },
-  frontID: {
-    data: Buffer,
-    contentType: String,
-    default: null,
-    select: false,
+  IDs: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Image",
   },
-  backID: {
-    data: Buffer,
-    contentType: String,
-    default: null,
-    select: false,
+  warnings: {
+    type: Number,
+    default: 0,
   },
+  firstLogin: {
+    type: Boolean,
+    default: true,
+  },
+  balance: {
+    type: Number,
+    default: 0,
+    min: 0,
+    validate(value) {
+      if (value.toString().match(/^[0-9]{1,7}(\.?[0-9]{0,2})?$/)) {
+        return true;
+      }
+      throw new Error("Balance must be a number");
+    },
+  },
+});
+//write function in model that if warning = 3, set status to blocked
+User.pre("save", function (next) {
+  if (this.warnings === 3) {
+    this.status = "blocked";
+  }
+  next();
 });
 module.exports = mongoose.model("User", User);
