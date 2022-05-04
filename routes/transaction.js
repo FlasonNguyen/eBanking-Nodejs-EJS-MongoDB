@@ -158,5 +158,27 @@ router.post("/withdraw", async (req, res) => {
 
   return res.json({ status: 200, message: "Withdraw Success" });
 });
-
+router.post('/transfer', async (req, res) => {
+  const {username, amount} = req.body
+  const user = await User.findOne({_id: req.session.user._id})
+  const targetUser = await User.findOne({username})
+  if(!targetUser){
+    return res.json({status: 404, message: 'User not found'})
+  }
+  if(user.balance < amount){
+    return res.json({status: 404, message: 'Insufficient Balance'})
+  }
+  if(amount )
+  user.balance -= amount
+  targetUser.balance += amount
+  await user.save()
+  await targetUser.save()
+  await new Transaction({
+    user: user._id,
+    amount: amount,
+    transactionType: 'transfer',
+    status: 'approved',
+    description: 'Transfer to ' + targetUser.username
+  }).save()
+})
 module.exports = router;
