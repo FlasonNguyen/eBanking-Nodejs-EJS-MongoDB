@@ -27,18 +27,17 @@ router.post("/signup", async (req, res, err) => {
   if (err) {
     console.log(err);
   }
-  const { email, phone, address, dataOfBirth, fullname } = req.body;
+  const { email, phone, address, dateOfBirth, fullname } = req.body;
   const username =
     Math.floor(Math.random() * (999999999 - 100000000)) + 1000000000;
   const password = (Math.random() + 1).toString(36).substring(6);
-  console.log(username, password);
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
   const user = new User({
     email,
     phone,
     address,
-    dataOfBirth,
+    dateOfBirth,
     fullname,
     username,
     password: hash,
@@ -81,11 +80,11 @@ router.post("/signin", async (req, res) => {
     });
   }
   const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
+  if (isMatch == false) {
     if (user.role == "user") {
       user.warnings += 1;
       await user.save();
-      if (user.warnings >= 3) {
+      if (user.warnings == 3) {
         user.status = "blocked";
         await user.save();
         return res.status(400).send({
@@ -147,8 +146,8 @@ router.post("/changePassword", async (req, res) => {
         }
       }
     }
-    const salt = bcrypt.genSalt(10);
-    const hash = bcrypt.hash(newPassword, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(newPassword, salt);
     user.password = hash;
     user.firstLogin = false;
     await user
@@ -233,14 +232,15 @@ router.post("/updateID", upload.array("IDimg", 2), async (req, res) => {
 });
 //Render User's Informations
 router.get("/detail", async (req, res) => {
-  const user = await User.findOne({ _id: req.session.user._id });
+  const { username } = req.body;
+  const user = await User.findOne({ _id: username });
   if (!user) {
     return res.status(404).send({
       status: "error",
       message: "User not found",
     });
   }
-  return res.send(user);
+  return res.json({ status: 200, user });
 });
 //Send OTP first then change Password
 router.post("/send-otp", async (req, res) => {
@@ -268,19 +268,15 @@ router.post("/forgetPassword", async (req, res) => {
         message: "User not found",
       });
     }
-
     if (newPassword != confirmPassword) {
       return res.status(400).send({
         status: "error",
         message: "Passwords do not match",
       });
     }
-    const hashedPassword = async function (password) {
-      const salt = await bcrypt.genSalt(10);
-      const hash = bcrypt.hash(newPassword, salt);
-      return hash;
-    };
-    user.password = await hashedPassword(newPassword);
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(newPassword, salt);
+    user.password = hash;
     await user
       .save()
       .then((user) => {

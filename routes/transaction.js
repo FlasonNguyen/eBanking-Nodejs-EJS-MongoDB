@@ -39,9 +39,9 @@ router.post("/deposit", async (req, res) => {
     card.balance -= 1000000;
     await card.save();
     await user.save();
-    const newHistory = await new Transaction({
+    await new Transaction({
       user: user._id,
-      amount: depositAmount,
+      amount: 1000000,
       transactionType: "deposit",
       status: "approved",
       description: "Deposit",
@@ -125,7 +125,10 @@ router.post("/withdraw", async (req, res) => {
     return res.json({ status: 500, message: err.message });
   });
   if (!card) {
-    return res.json({ status: 404, message: "Credit Card not Supported or Wrong Card Informations" });
+    return res.json({
+      status: 404,
+      message: "Credit Card not Supported or Wrong Card Informations",
+    });
   }
   if (user.balance < withdrawAmount) {
     return res.json({
@@ -158,27 +161,66 @@ router.post("/withdraw", async (req, res) => {
 
   return res.json({ status: 200, message: "Withdraw Success" });
 });
-router.post('/transfer', async (req, res) => {
-  const {username, amount} = req.body
-  const user = await User.findOne({_id: req.session.user._id})
-  const targetUser = await User.findOne({username})
-  if(!targetUser){
-    return res.json({status: 404, message: 'User not found'})
+router.post("/transfer", async (req, res) => {
+  const { phone, amount, note, payFee } = req.body;
+  const user = await User.findOne({ _id: req.session.user._id });
+  const targetUser = await User.findOne({ phone });
+  if (!targetUser) {
+    return res.json({ status: 404, message: "User not found" });
   }
-  if(user.balance < amount){
-    return res.json({status: 404, message: 'Insufficient Balance'})
+  if (user.balance < amount) {
+    return res.json({ status: 404, message: "Insufficient Balance" });
   }
-  if(amount )
-  user.balance -= amount
-  targetUser.balance += amount
-  await user.save()
-  await targetUser.save()
+  let status = "";
+  if (amount < 5000000) {
+    status = "approved";
+    if (payFee == true) {
+      user.balance -= amount * 1.05;
+      targetUser.balance += amount;
+    } else {
+      user.balance -= amount;
+      targetUser.balance += amount * 0.95;
+    }
+    await user.save();
+    await targetUser.save();
+    await sendMail(
+      user.email,
+      "Transfer Success",
+      `You have transfer ${amount} to ${targetUser.fullname}`
+    );
+  } else {
+    status = "pending";
+  }
   await new Transaction({
     user: user._id,
     amount: amount,
-    transactionType: 'transfer',
-    status: 'approved',
-    description: 'Transfer to ' + targetUser.username
-  }).save()
-})
+    transactionType: "transfer",
+    status: status,
+    description: "Transfer to " + targetUser.fullname + "\n" + note,
+    userpaid: payFee,
+    receiver: targetUser._id,
+  }).save();
+  return res.json({ status: 200, message: "Transfer Success" });
+});
+router.post("/phoneRecharge", async (req, res) => {
+  const { phone, amount } = req.body;
+  const user = await User.findOne({ _id: req.session.user._id });
+  const targetUser = await User.findOne({ phone });
+  if (!targetUser) {
+    return res.json({ status: 404, message: "User not found" });
+  }
+  if (user.balance < amount) {
+    return res.json({ status: 404, message: "Insufficient Balance" });
+  }
+  user.balance -= amount;
+  await user.save();
+  await new Transaction({
+    user: user._id,
+    amount: amount,
+    transactionType: "phoneRecharge",
+    status: "approved",
+    description: "Phone Recharge to " + targetUser.username,
+  }).save();
+  return res.json({ status: 200, message: "Phone Recharge Success" });
+});
 module.exports = router;

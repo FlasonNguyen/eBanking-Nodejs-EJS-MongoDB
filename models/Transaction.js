@@ -32,7 +32,6 @@ const Transaction = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    default: "pending",
     enum: ["pending", "approved", "rejected"],
   },
   description: {
@@ -42,13 +41,18 @@ const Transaction = new mongoose.Schema({
     default: "",
     maxlength: 255,
   },
+  userpaid: {
+    type: Boolean,
+    default: true,
+  },
+  receiver: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  reasons: {
+    type: String,
+    default: "Invalid Transaction",
+  },
 });
-Transaction.pre("save", function (next) {
-  if (this.amount >= 5000000 && this.transactionType != "deposit") {
-    this.status = "pending";
-  } else if (this.amount < 5000000 || this.transactionType == "deposit") {
-    this.status = "approved";
-  }
-  next();
-});
+
 module.exports = mongoose.model("Transaction", Transaction);

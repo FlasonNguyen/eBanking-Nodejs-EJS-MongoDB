@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-//create user schema
 const User = new mongoose.Schema({
   email: {
     type: String,
@@ -26,7 +25,8 @@ const User = new mongoose.Schema({
     default: Date.now,
   },
   dateOfBirth: {
-    type: Date,
+    type: String,
+    required: true,
   },
   fullname: {
     type: String,
