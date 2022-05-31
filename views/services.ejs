@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!-- Coding by CodingLab | www.codinglabweb.com -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="/stylesheet/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--<title>Dashboard Sidebar Menu</title>-->
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        <h4>TDT eBanking
+                        </h4>
+                    </a>
+                </li>
+                <% if (user.role=='admin' ) { %>
+                    <li>
+                        <a href="/admin">Website Management</a>
+                    </li>
+                    <li>
+                        <a href="/admin/transactions">Transactions Management</a>
+                    </li>
+                    <% } %>
+
+                        <li>
+                            <a href="/profile">Account</a>
+                        </li>
+                        <li>
+                            <a href="/history">History</a>
+                        </li>
+                        <li>
+                            <a href="/services">Services</a>
+                        </li>
+                        <li>
+                            <a href="/account/logout">Logout</a>
+                        </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <button class="sidebar-toggle" id="menu-toggle">&#9776</button>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Personal Financial</h5>
+                                <p class="card-text">Current Balance: <%= user.balance %>
+                                </p>
+                                <p class="card-text">Lasted Outcome: <%= user.balance %>
+                                </p>
+                                <p class="card-text">Lasted Income: <%= user.balance %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 services">
+                        <button class="btn btn-primary services-item" data-toggle="modal"
+                            data-target="#depositModal">Deposit</button>
+                        <button class="btn btn-primary services-item" data-toggle="modal"
+                            data-target="#withdrawModal">Withdraw</button>
+                        <button class="btn btn-primary services-item" data-toggle="modal"
+                            data-target="#transferModal">Transfer</button>
+                        <button class="btn btn-primary services-item" data-toggle="modal"
+                            data-target="#phoneRecharge">Phone Card</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModal"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Deposit</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+                        <form action="" id="depositForm">
+                            <label for="deposit">Card Number:</label>
+                            <input type="number" name="cardNumber" id="cardNumber" class="form-control" required>
+                            <label for="deposit">Expiration:</label>
+                            <input type="date" name="expiredAt" id="expiredAt" class="form-control" required>
+                            <label for="deposit">CVV:</label>
+                            <input type="number" name="cvv" class="form-control" required>
+                            <label for="deposit">Amount:</label>
+                            <input type="number" name="amount" class="form-control" required>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" form="depositForm" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="withdrawModal"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Withdraw Money</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+                        <form action="" id="withdrawForm">
+                            <label for="deposit">Card Number:</label>
+                            <input type="number" name="cardNumber" id="cardNumber" class="form-control" required>
+                            <label for="deposit">Expiration:</label>
+                            <input type="date" name="expiredAt" id="expiredAt" class="form-control" required>
+                            <label for="deposit">CVV:</label>
+                            <input type="number" name="cvv" class="form-control" required>
+                            <label for="deposit">Amount:</label>
+                            <input type="number" name="amount" class="form-control" required>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" form="withdrawForm" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="transferModal" tabindex="-1" role="dialog" aria-labelledby="transferModal"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Transfer Money</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+                        <form action="" id="transferForm">
+                            <label for="deposit">Receiver Phone Number:</label>
+                            <input type="text" name="phone" id="phone" class="form-control" required>
+                            <label for="deposit">Description:</label>
+                            <input type="text" name="note" id="expiredAt" class="form-control" required>
+                            <label for="deposit">Amount:</label>
+                            <input type="number" name="amount" class="form-control" required>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" name="payFee">
+                                <label class="form-check-label" for="exampleCheck1">Pay the fee</label>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" form="transferForm" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="phoneRecharge" tabindex="-1" role="dialog" aria-labelledby="phoneRecharge"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="phoneRecharge">Phone Recharge</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+                        <form action="" id="rechargeForm">
+                            <label for="deposit">Receiver Phone Number:</label>
+                            <input type="text" name="phone" id="phone" class="form-control" required>
+                            <label for="deposit">Amount:</label>
+                            <input type="number" name="amount" class="form-control" required>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" form="rechargeForm" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!----======== JS ======== -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="/javascript/main.js"></script>
+
+</body>
+
+</html>

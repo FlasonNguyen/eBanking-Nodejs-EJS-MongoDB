@@ -6,16 +6,21 @@ const User = require("../models/User");
 const Transaction = require("../models/Transaction");
 
 router.get("/", async (req, res) => {
-  const user = await User.find({}).catch((err) => {
+  const users = await User.find({}).catch((err) => {
     return res.json({ status: 500, message: err.message });
   });
-  const transaction = Transaction.find({}).catch((err) => {
+
+  return res.render("admin", { users, user: req.session.user });
+});
+router.get("/transactions", async (req, res) => {
+  const transactions = await Transaction.find({}).catch((err) => {
     return res.json({ status: 500, message: err.message });
   });
-  return res.render("admin", { user, transaction });
+  return res.render("transaction", { transactions, user: req.session.user });
 });
 router.post("/setUserStatus", async (req, res) => {
   const { username, status } = req.body;
+  console.log(username, status);
   const user = await User.findOne({ username });
   if (!user) {
     return res.status(404).send({
@@ -36,10 +41,12 @@ router.post("/setUserStatus", async (req, res) => {
   }
   user.status = status;
   user.warnings = 0;
-  await user.save();
-  return res.send({
-    status: "success",
-    message: "User status updated",
+  await user.save().then((data) => {
+    return res.send({
+      status: "success",
+      message: "User status updated",
+      data,
+    });
   });
 });
 router.post("/setTransactionStatus", async (req, res) => {
@@ -59,8 +66,8 @@ router.post("/setTransactionStatus", async (req, res) => {
       message: "Invalid status",
     });
   } else if (status == "approved") {
-    if(user.balance < transaction.amount) {
-      transaction.status = "rejected"
+    if (user.balance < transaction.amount) {
+      transaction.status = "rejected";
       await transaction.save();
       return res.status(400).json({
         status: "error",
@@ -90,8 +97,16 @@ router.post("/setTransactionStatus", async (req, res) => {
       await user.save();
       await transaction.save();
       console.log(status, transaction.status);
-      await sendMail(user.email, "Transfer Success", `You have transfer ${transaction.amount} to ${targetUser.fullname}`);
-      await sendMail(targetUser.email, "Transfer Success", `You have received ${transaction.amount} from ${user.fullname}`);
+      await sendMail(
+        user.email,
+        "Transfer Success",
+        `You have transfer ${transaction.amount} to ${targetUser.fullname}`
+      );
+      await sendMail(
+        targetUser.email,
+        "Transfer Success",
+        `You have received ${transaction.amount} from ${user.fullname}`
+      );
       return res.json({
         status: "success",
         message: "Transaction status updated",

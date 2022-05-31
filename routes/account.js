@@ -19,10 +19,16 @@ let otp = refreshOtp();
 //ROUTING ZONE
 
 router.get("/", (req, res) => {
-  return res.render("login");
+  return res.render("signin");
+});
+router.get("/signup", (req, res) => {
+  return res.render("signup");
 });
 //upload.array("IDimg", 2)
-
+router.get("/logout", (req, res) => {
+  req.session.destroy();
+  return res.redirect("/account");
+});
 router.post("/signup", async (req, res, err) => {
   if (err) {
     console.log(err);
@@ -54,7 +60,8 @@ router.post("/signup", async (req, res, err) => {
         "Account Created",
         `<h1>Account Created</h1><div>Username: ${user.username}</div><div>Password: ${password}</div>`
       );
-      return res.send(user);
+      console.log(username, password);
+      return res.redirect("/profile");
     })
     .catch((err) => {
       console.log(err);
@@ -71,7 +78,7 @@ router.post("/signin", async (req, res) => {
     });
   }
   if (user.firstLogin) {
-    return res.redirect("/account/changePassword");
+    return res.render("account", { user: user });
   }
   if (user.status == "blocked") {
     return res.status(404).send({
@@ -102,19 +109,12 @@ router.post("/signin", async (req, res) => {
   user.warnings = 0;
   await user.save();
   req.session.user = user;
-  return res.send({
-    status: "success",
-    user: {
-      username: user.username,
-      role: user.role,
-      status: user.status,
-      _id: user._id,
-    },
-  });
+  return res.redirect("/profile");
 });
 //write nodejs changepassword function
 router.post("/changePassword", async (req, res) => {
   const { username, newPassword, confirmPassword } = req.body;
+  console.log(username, newPassword, confirmPassword);
   const user = await User.findOne({ username });
   if (!user) {
     return res.status(404).send({
@@ -153,7 +153,7 @@ router.post("/changePassword", async (req, res) => {
     await user
       .save()
       .then((user) => {
-        return res.send(user);
+        return res.redirect("/profile");
       })
       .catch((err) => {
         console.log(err);
@@ -219,12 +219,11 @@ router.post("/updateID", upload.array("IDimg", 2), async (req, res) => {
         };
         await Image.findOneAndUpdate({ user: user._id }, update, {
           new: true,
-        }).then((data) => {
-          return res.send(data);
         });
       }
       user.status = "pending";
       await user.save();
+      return res.redirect("/profile");
     })
     .catch((err) => {
       console.log(err);

@@ -44,7 +44,11 @@ router.post("/deposit", async (req, res) => {
       amount: 1000000,
       transactionType: "deposit",
       status: "approved",
-      description: "Deposit",
+      description: `${
+        user.fullname
+      } has deposited ${1000000} due to limited card at ${moment().format(
+        "MMMM Do YYYY, h:mm:ss a"
+      )}`,
     })
       .save()
       .catch((err) => {

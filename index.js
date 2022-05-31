@@ -26,6 +26,7 @@ app.use(
 app.use("/account", require("./routes/account"));
 app.use("/admin", require("./routes/admin"));
 app.use("/transaction", require("./routes/transaction"));
+app.use("/", require("./routes/index"));
 
 mongoose
   .connect(process.env.MONGO_URI, {
