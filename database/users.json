@@ -1,0 +1,81 @@
+[{
+  "_id": {
+    "$oid": "6275fbbb58d5e5e384eaabf4"
+  },
+  "email": "anhquoc1920@gmail.com",
+  "username": "1234567890",
+  "password": "$2b$10$SIMP90X79fwaLqjtvpiUvemita4B.Kwa3cPn2rpudGIlmP4y4k/U6",
+  "createdAt": {
+    "$date": "2022-05-07T04:55:23.004Z"
+  },
+  "dateOfBirth": "15/11/2000",
+  "fullname": "Flason",
+  "address": "Bind",
+  "phone": "0772679700",
+  "role": "admin",
+  "status": "active",
+  "warnings": 0,
+  "firstLogin": false,
+  "balance": 35100000,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62766050e788673b5427ff60"
+  },
+  "email": "anhquoc19202@gmail.com",
+  "username": "1440659877",
+  "password": "$2b$10$SIMP90X79fwaLqjtvpiUvemita4B.Kwa3cPn2rpudGIlmP4y4k/U6",
+  "createdAt": {
+    "$date": "2022-05-07T12:04:32.677Z"
+  },
+  "dateOfBirth": "15/11/2000",
+  "fullname": "Flason Nguyen",
+  "address": "Heaven",
+  "phone": "0768004810",
+  "role": "user",
+  "status": "active",
+  "warnings": 0,
+  "firstLogin": false,
+  "balance": 2895000,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6295a28eb66fbdb783aa878f"
+  },
+  "email": "anhquoc19203@gmail.com",
+  "username": "1294565361",
+  "password": "$2b$10$SIMP90X79fwaLqjtvpiUvemita4B.Kwa3cPn2rpudGIlmP4y4k/U6",
+  "createdAt": {
+    "$date": "2022-05-31T05:07:26.243Z"
+  },
+  "dateOfBirth": "2000-11-15",
+  "fullname": "Flason Is Me",
+  "address": "123 Tran Hung Dao",
+  "phone": "0123456789",
+  "role": "user",
+  "status": "active",
+  "warnings": 0,
+  "firstLogin": false,
+  "balance": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6295f7efa782396274888637"
+  },
+  "email": "haanhquoc@gmail.com",
+  "username": "1036637150",
+  "password": "$2b$10$SIMP90X79fwaLqjtvpiUvemita4B.Kwa3cPn2rpudGIlmP4y4k/U6",
+  "createdAt": {
+    "$date": "2022-05-31T11:11:43.922Z"
+  },
+  "dateOfBirth": "2000-12-12",
+  "fullname": "Ha Anh Quoc",
+  "address": "123 Ma Lang",
+  "phone": "0147258369",
+  "role": "user",
+  "status": "pending",
+  "warnings": 0,
+  "firstLogin": false,
+  "balance": 0,
+  "__v": 0
+}]

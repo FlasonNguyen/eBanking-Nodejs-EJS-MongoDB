@@ -1,0 +1,31 @@
+[{
+  "_id": {
+    "$oid": "6275fa28ccd320807c2c82a3"
+  },
+  "cardNumber": 111111,
+  "expiredAt": "10/10/2022",
+  "cvv": 411,
+  "description": "Unlimited credit and deposit",
+  "balance": -1,
+  "limited": false
+},{
+  "_id": {
+    "$oid": "6275faabccd320807c2c82a4"
+  },
+  "cardNumber": 222222,
+  "expiredAt": "11/11/2022",
+  "cvv": 443,
+  "description": "Deposit limited at 1 mil",
+  "balance": -1,
+  "limited": true
+},{
+  "_id": {
+    "$oid": "6275faddccd320807c2c82a5"
+  },
+  "cardNumber": 333333,
+  "expiredAt": "12/12/2022",
+  "cvv": 577,
+  "description": "No money",
+  "balance": 0,
+  "limited": false
+}]

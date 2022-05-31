@@ -1,0 +1,41 @@
+[{
+  "_id": {
+    "$oid": "627680ae265bf717eebe3d4b"
+  },
+  "user": {
+    "$oid": "62766050e788673b5427ff60"
+  },
+  "amount": 100000,
+  "transactionType": "transfer",
+  "status": "approved",
+  "description": "Transfer to 1234567890\nDem qua em tuyet lam",
+  "userpaid": true,
+  "receiver": {
+    "$oid": "6275fbbb58d5e5e384eaabf4"
+  },
+  "createdAt": {
+    "$date": "2022-05-07T14:22:38.273Z"
+  },
+  "__v": 0,
+  "reasons": "You poor"
+},{
+  "_id": {
+    "$oid": "6295f41a080c124a13a4fd29"
+  },
+  "user": {
+    "$oid": "62766050e788673b5427ff60"
+  },
+  "amount": 100000,
+  "transactionType": "transfer",
+  "status": "approved",
+  "description": "Transfer to 1234567890\nDem qua em tuyet lam",
+  "userpaid": true,
+  "receiver": {
+    "$oid": "6275fbbb58d5e5e384eaabf4"
+  },
+  "createdAt": {
+    "$date": "2022-05-07T14:22:38.273Z"
+  },
+  "__v": 0,
+  "reasons": "You poor"
+}]
