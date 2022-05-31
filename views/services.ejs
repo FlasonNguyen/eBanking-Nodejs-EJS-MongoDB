@@ -20,9 +20,6 @@
 
 <body>
     <div id="wrapper">
-
-        <!-- Sidebar -->
-
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
@@ -54,9 +51,6 @@
                         </li>
             </ul>
         </div>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <button class="sidebar-toggle" id="menu-toggle">&#9776</button>
@@ -84,7 +78,8 @@
                         <button class="btn btn-primary services-item" data-toggle="modal"
                             data-target="#transferModal">Transfer</button>
                         <button class="btn btn-primary services-item" data-toggle="modal"
-                            data-target="#phoneRecharge">Phone Card</button>
+                            data-target="#phoneRecharge">Phone
+                            Card</button>
                     </div>
                 </div>
             </div>
@@ -218,166 +213,6 @@
         <!-- /#page-content-wrapper -->
 
     </div>
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <button class="sidebar-toggle" id="menu-toggle">&#9776</button>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card text-white bg-success mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Personal Financial</h5>
-                            <p class="card-text">Current Balance: <%= user.balance %>
-                            </p>
-                            <p class="card-text">Lasted Outcome: <%= user.balance %>
-                            </p>
-                            <p class="card-text">Lasted Income: <%= user.balance %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 services">
-                    <button class="btn btn-primary services-item" data-toggle="modal"
-                        data-target="#depositModal">Deposit</button>
-                    <button class="btn btn-primary services-item" data-toggle="modal"
-                        data-target="#withdrawModal">Withdraw</button>
-                    <button class="btn btn-primary services-item" data-toggle="modal"
-                        data-target="#transferModal">Transfer</button>
-                    <button class="btn btn-primary services-item" data-toggle="modal" data-target="#phoneRecharge">Phone
-                        Card</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModal"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Deposit</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="/transaction/deposit" method="post" id="depositForm">
-                        <label for="deposit">Card Number:</label>
-                        <input type="number" name="cardNumber" id="cardNumber" class="form-control" required>
-                        <label for="deposit">Expiration:</label>
-                        <input type="date" name="expiredAt" id="expiredAt" class="form-control" required>
-                        <label for="deposit">CVV:</label>
-                        <input type="number" name="cvv" class="form-control" required>
-                        <label for="deposit">Amount:</label>
-                        <input type="number" name="amount" class="form-control" required>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" form="depositForm" class="btn btn-primary">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="withdrawModal"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Withdraw Money</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-danger" role="alert">
-                        A simple danger alert—check it out!
-                    </div>
-                    <form action="/transaction/withdraw" method="post" id="withdrawForm">
-                        <label for="deposit">Card Number:</label>
-                        <input type="number" name="cardNumber" id="cardNumber" class="form-control" required>
-                        <label for="deposit">Expiration:</label>
-                        <input type="date" name="expiredAt" id="expiredAt" class="form-control" required>
-                        <label for="deposit">CVV:</label>
-                        <input type="number" name="cvv" class="form-control" required>
-                        <label for="deposit">Amount:</label>
-                        <input type="number" name="amount" class="form-control" required>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" form="withdrawForm" class="btn btn-primary">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="transferModal" tabindex="-1" role="dialog" aria-labelledby="transferModal"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Transfer Money</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-danger" role="alert">
-                        A simple danger alert—check it out!
-                    </div>
-                    <form action="/transaction/transfer" method="post" id="transferForm">
-                        <label for="deposit">Receiver Phone Number:</label>
-                        <input type="text" name="phone" id="phone" class="form-control" required>
-                        <label for="deposit">Description:</label>
-                        <input type="text" name="note" id="expiredAt" class="form-control" required>
-                        <label for="deposit">Amount:</label>
-                        <input type="number" name="amount" class="form-control" required>
-                        <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" name="payFee">
-                            <label class="form-check-label" for="exampleCheck1">Pay the fee</label>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" form="transferForm" class="btn btn-primary">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="phoneRecharge" tabindex="-1" role="dialog" aria-labelledby="phoneRecharge"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="phoneRecharge">Phone Recharge</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-danger" role="alert">
-                        A simple danger alert—check it out!
-                    </div>
-                    <form action="/transaction/phoneRecharge" method="post" id="rechargeForm">
-                        <label for="deposit">Receiver Phone Number:</label>
-                        <input type="text" name="phone" id="phone" class="form-control" required>
-                        <label for="deposit">Amount:</label>
-                        <input type="number" name="amount" class="form-control" required>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" form="rechargeForm" class="btn btn-primary">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /#page-content-wrapper -->
     <!-- /#wrapper -->
     <!----======== JS ======== -->
     <!-- Optional JavaScript -->
