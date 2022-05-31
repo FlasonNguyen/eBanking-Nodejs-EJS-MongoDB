@@ -1,4 +1,8 @@
 $(document).ready(function () {
+  function firstLogin() {
+    $("#firstPassword").modal("show");
+    $("#firstPassword").modal({ backdrop: "static", keyboard: false });
+  }
   console.log("main.js loaded");
   $("#menu-toggle").click(function (e) {
     e.preventDefault();
