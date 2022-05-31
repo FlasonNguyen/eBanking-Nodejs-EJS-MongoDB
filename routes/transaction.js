@@ -69,7 +69,8 @@ router.post("/deposit", async (req, res) => {
       description: "Deposit from Credit Card",
     }).save();
     await user.save();
-    return res.json({ status: 200, message: "Deposit Success" });
+    req.session.user.balance += depositAmount;
+    return res.redirect("/profile");
   }
 });
 router.post("/withdraw", async (req, res) => {
@@ -162,8 +163,8 @@ router.post("/withdraw", async (req, res) => {
       }).save();
     }
   }
-
-  return res.json({ status: 200, message: "Withdraw Success" });
+  req.session.user.balance += withdrawAmount;
+  return res.redirect("/profile");
 });
 router.post("/transfer", async (req, res) => {
   const { phone, amount, note, payFee } = req.body;
@@ -204,7 +205,8 @@ router.post("/transfer", async (req, res) => {
     userpaid: payFee,
     receiver: targetUser._id,
   }).save();
-  return res.json({ status: 200, message: "Transfer Success" });
+  req.session.user.balance -= amount;
+  return res.redirect("/profile");
 });
 router.post("/phoneRecharge", async (req, res) => {
   const { phone, amount } = req.body;
@@ -225,6 +227,7 @@ router.post("/phoneRecharge", async (req, res) => {
     status: "approved",
     description: "Phone Recharge to " + targetUser.username,
   }).save();
-  return res.json({ status: 200, message: "Phone Recharge Success" });
+  req.session.user.balance -= amount;
+  return res.redirect("/profile");
 });
 module.exports = router;

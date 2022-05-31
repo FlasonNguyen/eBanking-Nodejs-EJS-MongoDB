@@ -100,7 +100,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="/transaction/deposit" id="depositForm">
+                        <form action="/transaction/deposit" method="post" id="depositForm">
                             <label for="deposit">Card Number:</label>
                             <input type="number" name="cardNumber" id="cardNumber" class="form-control" required>
                             <label for="deposit">Expiration:</label>
@@ -132,7 +132,7 @@
                         <div class="alert alert-danger" role="alert">
                             A simple danger alert—check it out!
                         </div>
-                        <form action="/transaction/withdraw" id="withdrawForm">
+                        <form action="/transaction/withdraw" method="post" id="withdrawForm">
                             <label for="deposit">Card Number:</label>
                             <input type="number" name="cardNumber" id="cardNumber" class="form-control" required>
                             <label for="deposit">Expiration:</label>
@@ -165,7 +165,7 @@
                         <div class="alert alert-danger" role="alert">
                             A simple danger alert—check it out!
                         </div>
-                        <form action="/transaction/transfer" id="transferForm">
+                        <form action="/transaction/transfer" method="post" id="transferForm">
                             <label for="deposit">Receiver Phone Number:</label>
                             <input type="text" name="phone" id="phone" class="form-control" required>
                             <label for="deposit">Description:</label>
@@ -200,7 +200,7 @@
                         <div class="alert alert-danger" role="alert">
                             A simple danger alert—check it out!
                         </div>
-                        <form action="/transaction/phoneRecharge" id="rechargeForm">
+                        <form action="/transaction/phoneRecharge" method="post" id="rechargeForm">
                             <label for="deposit">Receiver Phone Number:</label>
                             <input type="text" name="phone" id="phone" class="form-control" required>
                             <label for="deposit">Amount:</label>
