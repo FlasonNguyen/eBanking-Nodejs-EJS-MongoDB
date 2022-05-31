@@ -20,4 +20,19 @@ $(document).ready(function () {
       console.log(response);
     });
   });
+  $(".changeTransactionStatus").click((e) => {
+    console.log("clicked 2");
+    let id = e.target.dataset.id;
+    let status = e.target.dataset.status;
+    $.ajax({
+      url: "/admin/setTransactionStatus",
+      type: "POST",
+      data: {
+        id,
+        status,
+      },
+    }).then((response) => {
+      console.log(response);
+    });
+  });
 });

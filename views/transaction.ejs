@@ -108,10 +108,10 @@
                                                         <%= transaction.status.toUpperCase() %>
                                                     </td>
                                                     <td><a class="btn btn-success changeTransactionStatus"
-                                                            data-id="<%= transaction._id %>" data-status="active"
+                                                            data-id="<%= transaction._id %>" data-status="approved"
                                                             id="approve">Activate</a>
                                                         <a class="btn btn-danger changeTransactionStatus"
-                                                            data-usn="<%= transaction._id %>" data-status="blocked"
+                                                            data-id="<%= transaction._id %>" data-status="rejected"
                                                             id="rejected">Block</a>
                                                     </td>
                                             </tr>
