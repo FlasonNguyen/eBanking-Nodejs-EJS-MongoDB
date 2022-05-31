@@ -5,14 +5,6 @@ const User = require("../models/User");
 const Transaction = require("../models/Transaction");
 const Image = require("../models/Image");
 
-function moneyFormatted(money) {
-  const formatter = Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
-  return formatter.format(money);
-}
-
 router.get("/", async (req, res) => {
   if (!req.session.user) return res.redirect("/account");
   return res.render("index");

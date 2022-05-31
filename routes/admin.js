@@ -6,8 +6,6 @@ const User = require("../models/User");
 const Transaction = require("../models/Transaction");
 
 router.get("/", async (req, res) => {
-  if (!req.session.user) return res.redirect("/account");
-  if (req.session.user.role != "admin") return res.redirect("/account");
   const users = await User.find({}).catch((err) => {
     return res.json({ status: 500, message: err.message });
   });
@@ -15,16 +13,12 @@ router.get("/", async (req, res) => {
   return res.render("admin", { users, user: req.session.user });
 });
 router.get("/transactions", async (req, res) => {
-  if (!req.session.user) return res.redirect("/account");
-  if (req.session.user.role != "admin") return res.redirect("/account");
   const transactions = await Transaction.find({}).catch((err) => {
     return res.json({ status: 500, message: err.message });
   });
   return res.render("transaction", { transactions, user: req.session.user });
 });
 router.post("/setUserStatus", async (req, res) => {
-  if (!req.session.user) return res.redirect("/account");
-  if (req.session.user.role != "admin") return res.redirect("/account");
   const { username, status } = req.body;
   console.log(username, status);
   const user = await User.findOne({ username });
@@ -56,8 +50,6 @@ router.post("/setUserStatus", async (req, res) => {
   });
 });
 router.post("/setTransactionStatus", async (req, res) => {
-  if (!req.session.user) return res.redirect("/account");
-  if (req.session.user.role != "admin") return res.redirect("/account");
   const { id, status, reason } = req.body;
   const transaction = await Transaction.findOne({ _id: id });
 
