@@ -3,6 +3,14 @@ $(document).ready(function () {
     $("#firstPassword").modal("show");
     $("#firstPassword").modal({ backdrop: "static", keyboard: false });
   }
+  function moneyFormatted(money) {
+    let formatters = new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+    let result = formatters.format(money);
+    return result;
+  }
   console.log("main.js loaded");
   $("#menu-toggle").click(function (e) {
     e.preventDefault();

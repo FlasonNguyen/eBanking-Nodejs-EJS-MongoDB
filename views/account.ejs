@@ -284,7 +284,7 @@
                                                             <td>
                                                                 <%= transaction.transactionType %>
                                                             </td>
-                                                            <td>
+                                                            <td id="money" onload="moneyFormatted(<%= transaction.amount %>)">
                                                                 <%= transaction.amount %>
                                                             </td>
                                                             <td>

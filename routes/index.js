@@ -21,6 +21,7 @@ router.get("/profile", async (req, res) => {
   if (!req.session.user) return res.redirect("/account");
   const history = await Transaction.find({ user: req.session.user._id });
   const idImg = await Image.find({ user: req.session.user._id });
+  req.session.user.balance = moneyFormatted(req.session.user.balance);
   return res.render("account", {
     user: req.session.user,
     history: history,
