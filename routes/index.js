@@ -39,5 +39,6 @@ router.get("/history", async (req, res) => {
 router.get("/services", async (req, res) => {
   if (!req.session.user) return res.redirect("/account");
   return res.render("services", { user: req.session.user });
+  dư;
 });
 module.exports = router;
