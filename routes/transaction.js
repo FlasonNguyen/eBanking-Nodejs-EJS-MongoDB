@@ -8,6 +8,14 @@ const User = require("../models/User");
 const CreditCard = require("../models/CreditCard");
 const Transaction = require("../models/Transaction");
 
+function moneyFormatted(money) {
+  const formatter = Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
+  return formatter.format(money);
+}
+
 router.post("/deposit", async (req, res) => {
   const { cardNumber, expiredAt, cvv, amount } = req.body;
   let depositAmount = parseInt(amount);

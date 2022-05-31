@@ -16,6 +16,14 @@ function refreshOtp() {
 }
 let otp = refreshOtp();
 
+function moneyFormatted(money) {
+  const formatter = Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
+  return formatter.format(money);
+}
+
 //ROUTING ZONE
 
 router.get("/", (req, res) => {
