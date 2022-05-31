@@ -49,6 +49,7 @@ Step 4: Click to 'eBankingTDT' and click 'Create Collection' 3 time and name it 
 Step 5: Access all the Collection and click 'ADD DATA', select 'Import File', select JSON in 'Select Input File Type', Select the file with the corresponded file's name and click 'Import'
 
 Step 6: Do Step 5 with all 4 collections corresponded to 4 json files
+
 Final Step:
 
 Open [http://localhost:7070/account](http://localhost:7070/account) and start sign in/sign out to explore the website
